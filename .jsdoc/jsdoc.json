@@ -1,0 +1,27 @@
+{
+  "source": {
+    "include": [
+      "script.js",
+      "sw.js"
+    ],
+    "includePattern": "\\.(js|mjs)$",
+    "excludePattern": "(^|/)(node_modules|docs|tests|\\.jsdoc)(/|$)|\\.min\\.js$"
+  },
+  "sourceType": "module",
+  "plugins": [
+    "plugins/markdown"
+  ],
+  "opts": {
+    "destination": "docs",
+    "recurse": true,
+    "encoding": "utf8",
+    "readme": ".jsdoc/inicio.md"
+  },
+  "templates": {
+    "default": {
+      "includeDate": false,
+      "outputSourceFiles": true
+    },
+    "cleverLinks": true
+  }
+}

@@ -4,6 +4,7 @@
 
 <div align="center">
   <a href="https://github.com/evagr11/tpv-barra-festival"><img src="https://img.shields.io/badge/Ver_Código-0F0F1A?style=for-the-badge&logo=github&logoColor=white" alt="Ver Código"></a>
+  <a href="https://evagr11.github.io/tpv-barra-festival/docs/" target="_blank"><img src="https://img.shields.io/badge/Documentación_(JSDoc)-0F0F1A?style=for-the-badge&logo=javascript&logoColor=white" alt="Documentación del código"></a>
   <a href="https://evagr11.github.io/tpv-barra-festival/"><img src="https://img.shields.io/badge/Ver_Demo-6C5CE7?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Ver Demo"></a>
 </div>
 

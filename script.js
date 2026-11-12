@@ -1,3 +1,10 @@
+/**
+ * TPV de la barra: los productos por categorías con sus contadores, el total, el pago con el
+ * teclado numérico y el cambio. Todo el dinero va en céntimos (números enteros) para que no haya
+ * errores de redondeo. Los precios se pueden cambiar desde el panel de ajustes y se guardan en el
+ * `localStorage` del móvil.
+ * @namespace TPV
+ */
 (() => {
   "use strict";
 
@@ -12,12 +19,22 @@
   //
   // Para cambiar un producto o un precio por defecto, edita solo este array.
   // "categoria" decide en qué bloque aparece (ver CATEGORIAS más abajo).
+  /**
+   * Bloques en los que se agrupan los productos.
+   * @type {Array<{id: string, titulo: string}>}
+   * @memberof TPV
+   */
   const CATEGORIAS = [
     { id: "bebida", titulo: "La bebida" },
     { id: "v400",   titulo: "Vaso 400 ml" },
     { id: "v900",   titulo: "Vaso 900 ml" }
   ];
 
+  /**
+   * Catálogo con los precios por defecto en céntimos. Para cambiar un producto, se edita solo esta lista.
+   * @type {Array<{id: string, categoria: string, icono: string, nombre: string, precio: number}>}
+   * @memberof TPV
+   */
   const PRODUCTOS = [
     { id: "vaso",       categoria: "bebida", icono: "🥛", nombre: "Vaso",            precio: 100 },
     { id: "agua",       categoria: "bebida", icono: "💧", nombre: "Agua",            precio: 200 },
@@ -36,6 +53,11 @@
 
   const IDS = PRODUCTOS.map(p => p.id);
   const PRECIOS_POR_DEFECTO = PRODUCTOS.reduce((acc, p) => (acc[p.id] = p.precio, acc), {});
+  /**
+   * Clave con la que se guardan los precios en `localStorage`.
+   * @type {string}
+   * @memberof TPV
+   */
   const CLAVE_STORAGE = "barra_precios_contempopranea_v2"; // clave nueva: ignora precios guardados de la versión anterior
 
   // ---------- Estado ----------
@@ -43,6 +65,11 @@
   let cantidades = IDS.reduce((acc, id) => (acc[id] = 0, acc), {});
   let pagoTexto = "";
 
+  /**
+   * Convierte lo escrito en el teclado del pago (por ejemplo «12,5») a céntimos.
+   * @returns {number} el pago en céntimos.
+   * @memberof TPV
+   */
   function pagoEnCentimos() {
     if (pagoTexto === "") return 0;
     if (!pagoTexto.includes(",")) {
@@ -58,6 +85,12 @@
   }
 
   // ---------- Utilidades de dinero ----------
+  /**
+   * Da formato de euros en español a una cantidad en céntimos.
+   * @param {number} centimos cantidad en céntimos.
+   * @returns {string} por ejemplo «4,00 €».
+   * @memberof TPV
+   */
   function formatearCentimos(centimos) {
     const euros = centimos / 100;
     return euros.toLocaleString("es-ES", {
@@ -66,11 +99,20 @@
     }) + " €";
   }
 
+  /**
+   * @returns {number} el total del pedido en céntimos.
+   * @memberof TPV
+   */
   function totalCentimos() {
     return IDS.reduce((acc, id) => acc + precios[id] * cantidades[id], 0);
   }
 
   // ---------- Persistencia de precios ----------
+  /**
+   * Lee los precios guardados; si no hay o están incompletos, usa los de por defecto.
+   * @returns {Object<string, number>} precio en céntimos de cada producto.
+   * @memberof TPV
+   */
   function cargarPrecios() {
     try {
       const guardado = localStorage.getItem(CLAVE_STORAGE);
@@ -82,6 +124,10 @@
     return { ...PRECIOS_POR_DEFECTO };
   }
 
+  /**
+   * Guarda los precios actuales en `localStorage`. Si el almacenamiento no está disponible, sigue sin guardarlos.
+   * @memberof TPV
+   */
   function guardarPrecios() {
     try {
       localStorage.setItem(CLAVE_STORAGE, JSON.stringify(precios));
@@ -92,6 +138,10 @@
   const contenedorProductos = document.getElementById("listaProductos");
   const contenedorAjustes = document.getElementById("ajustesLista");
 
+  /**
+   * Crea las tarjetas de los productos y las filas del panel de ajustes a partir del catálogo.
+   * @memberof TPV
+   */
   function construirProductos() {
     contenedorProductos.innerHTML = CATEGORIAS.map(cat => {
       const tarjetas = PRODUCTOS.filter(p => p.categoria === cat.id).map(p => `
@@ -141,6 +191,10 @@
   };
 
   // ---------- Render ----------
+  /**
+   * Escribe el precio de cada producto en su tarjeta y en el panel de ajustes.
+   * @memberof TPV
+   */
   function renderPrecios() {
     IDS.forEach(id => {
       document.getElementById("pu-" + id).textContent =
@@ -150,6 +204,10 @@
     });
   }
 
+  /**
+   * Escribe la cantidad y el subtotal de cada producto.
+   * @memberof TPV
+   */
   function renderCantidadesYSubtotales() {
     IDS.forEach(id => {
       document.getElementById("cant-" + id).textContent = cantidades[id];
@@ -158,6 +216,10 @@
     });
   }
 
+  /**
+   * Escribe el total, el pago y el cambio, y avisa si el pago no llega.
+   * @memberof TPV
+   */
   function renderTotales() {
     const total = totalCentimos();
     el.totalCifra.textContent = formatearCentimos(total);
@@ -177,6 +239,10 @@
     }
   }
 
+  /**
+   * Vuelve a pintar precios, cantidades y totales.
+   * @memberof TPV
+   */
   function renderTodo() {
     renderPrecios();
     renderCantidadesYSubtotales();

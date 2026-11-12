@@ -1,7 +1,22 @@
 /* Service worker: guarda la app en el móvil para que abra aunque no haya cobertura.
    Primero intenta la red (para recibir cambios de precios o productos) y, si no hay
    conexión, usa la copia guardada. Si cambias la lista de archivos, sube la versión. */
+/**
+ * Service worker: guarda la app en el móvil para que abra sin cobertura. Primero intenta la red
+ * y, si no hay conexión, usa la copia guardada.
+ * @namespace ServiceWorker
+ */
+/**
+ * Nombre de la caché. Hay que cambiarlo al cambiar la lista de archivos.
+ * @type {string}
+ * @memberof ServiceWorker
+ */
 const VERSION = "barra-v1";
+/**
+ * Archivos que se guardan al instalar.
+ * @type {string[]}
+ * @memberof ServiceWorker
+ */
 const ARCHIVOS = ["./", "index.html", "style.css", "script.js", "manifest.webmanifest",
   "icons/icono-192.png", "icons/icono-512.png", "icons/apple-touch-icon.png"];
 
