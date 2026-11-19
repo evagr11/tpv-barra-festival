@@ -136,7 +136,7 @@ Si quieres probarlo en tu ordenador:
   <a href="https://github.com/evagr11" target="_blank">
     <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub">
   </a>
-  <a href="https://www.linkedin.com/in/eva-gallardo-romero-830362349/" target="_blank">
+  <a href="https://www.linkedin.com/in/eva-gallardo-romero/" target="_blank">
     <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn">
   </a>
 </div>
